@@ -6,4 +6,20 @@
  * Time: 7:39 PM
  */
 
-echo 'Hola';
+main::start();
+
+class main {
+
+    static public function start(){
+
+        $file = fopen("project.csv", 'r');
+
+        while(! feof($file))
+        {
+            print_r(fgetcsv($file));
+        }
+
+        fclose($file);
+
+    }
+}
