@@ -12,11 +12,16 @@ class main {
 
     static public function start($filename)
     {
-
         $records = csv::getRecords($filename);
-
-
+        foreach ($records as $record){
+            $array = $record->returnArray();
+            print_r($array);
+        }
     }
+}
+class html{
+
+    
 }
 class csv {
 
@@ -24,6 +29,7 @@ class csv {
 
         $file = fopen("$filename", 'r');
 
+        $fieldNames = array();
         $count = 0;
 
         while (! feof($file))
@@ -41,20 +47,26 @@ class csv {
         return ($records);
     }
 }
+
 class record {
 
     public function __construct(Array $fieldNames = null, $values = null){
 
-
         $record = array_combine($fieldNames, $values);
 
-        foreach ($record as $property => $value) {
+        foreach ($record as $property => $value){
             $this->createProperty($property, $value);
         }
-        print_r($this);
 
     }
-    public function createProperty($name = 'First', $value = 'Keith'){
+
+    public function ReturnArray(){
+        $array = (array) $this;
+        return $array;
+
+    }
+
+    public function createProperty($name, $value){
         $this->{$name} = $value;
     }
 
