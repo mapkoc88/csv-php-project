@@ -13,15 +13,40 @@ class main {
     static public function start($filename)
     {
         $records = csv::getRecords($filename);
-        foreach ($records as $record){
-            $array = $record->returnArray();
-            print_r($array);
+        $table = html::generateTable($records);
         }
-    }
 }
 class html{
+     public static function generateTable($records){
 
-    
+         $table = "<table border=1>";
+
+         foreach ($records as $record){
+             $bgcolor = "#FFFFFF";
+             $array = $record->returnArray();
+             $values = array_values($array);
+             $titles = array_keys($array);
+
+             if($count==0){
+                 foreach($titles as $cell) {
+                     $table .= "<th bgcolor='#0099FF'>".$cell."</th>"; //print the titles only
+                 }
+             }
+
+             // print all the values
+             if ($count % 2) {
+                 $bgcolor = "#808080";
+             }
+             $table .=  "<tr bgcolor='{$bgcolor}' >";
+             while (list($key, $val) = each($values)) {
+                 $table .= "<td >".$val."</td>";
+             }
+             $table .=  "</tr>";
+             $count++;
+         }
+         $table .=  "</table>";
+         echo $table;
+}
 }
 class csv {
 
