@@ -24,7 +24,6 @@ class csv {
 
         $file = fopen("$filename", 'r');
 
-        $fieldNames = array();
         $count = 0;
 
         while (! feof($file))
@@ -44,24 +43,28 @@ class csv {
 }
 class record {
 
-    public function __construct(Array $record = null){
+    public function __construct(Array $fieldNames = null, $values = null){
 
-        print_r($record);
-        $this->createProperty();
+
+        $record = array_combine($fieldNames, $values);
+
+        foreach ($record as $property => $value) {
+            $this->createProperty($property, $value);
         }
+        print_r($this);
 
-
+    }
     public function createProperty($name = 'First', $value = 'Keith'){
         $this->{$name} = $value;
     }
 
 }
+
 class recordFactory {
 
-    public static function create (array $fieldNames =null, Array $record = null) {
+    public static function create (array $fieldNames =null, Array $values = null) {
 
-        print_r($fieldNames);
-        print_r($record);
+        $record = new record($fieldNames, $values);
 
         return $record;
     }
