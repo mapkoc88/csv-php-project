@@ -6,20 +6,43 @@
  * Time: 7:39 PM
  */
 
-main::start();
+main::start("project.csv");
 
 class main {
 
-    static public function start(){
+    static public function start($filename)
+    {
 
-        $file = fopen("project.csv", 'r');
+        $records = csv::getRecords($filename);
+        $record = recordFactory::create();
+        print_r($record);
 
-        while(! feof($file))
+    }
+}
+class csv {
+
+    static public function getRecords($filename) {
+
+        $file = fopen("$filename", 'r');
+
+        while (! feof($file))
         {
-            print_r(fgetcsv($file));
+            $record = fgetcsv($file);
+            $records[] = $records;
         }
-
         fclose($file);
+        return ($records);
+    }
+}
+class record{
 
+}
+class recordFactory {
+
+    public static function create (Array $array = null) {
+
+        $record = new record();
+
+        return $record;
     }
 }
